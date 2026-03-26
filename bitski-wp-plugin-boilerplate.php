@@ -12,7 +12,7 @@
  * Author: Peter Eckerle
  * Author URI: https://bitski.de
  * Description: Slim WordPress plugin boilerplate integrating PHP OOP principles.
- * Version: 0.1.0
+ * Version: 0.1.1
  * Requires at least: 6.6
  * Requires PHP: 7.4
  * License: GNU General Public License v3.0 or later
@@ -20,3 +20,8 @@
  * Text Domain: bitski-wp-plugin-boilerplate
  * Domain Path: /languages
  */
+
+// Loads the plugin init file.
+if (file_exists(__DIR__ . '/init.php')) {
+    require_once __DIR__ . '/init.php';
+}
