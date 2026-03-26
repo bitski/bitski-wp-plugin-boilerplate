@@ -7,7 +7,7 @@
 
 Slim WordPress plugin boilerplate integrating PHP OOP principles for high-performance development.
 
-v0.0.0 | GPL v3+
+v0.1.0 | GPL v3+
 
 ## Disclaimer
 
