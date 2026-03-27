@@ -12,7 +12,7 @@
  * Author: Peter Eckerle
  * Author URI: https://bitski.de
  * Description: Slim WordPress plugin boilerplate integrating PHP OOP principles.
- * Version: 0.1.1
+ * Version: 0.1.2
  * Requires at least: 6.6
  * Requires PHP: 7.4
  * License: GNU General Public License v3.0 or later
