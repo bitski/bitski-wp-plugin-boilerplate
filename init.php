@@ -28,7 +28,11 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
  *
  * @var array $bootstrap_classes
  */
-$bootstrap_classes = [];
+$bootstrap_classes = [
+    \BitskiWPPluginBoilerplate\plugin\Config::class,
+    \BitskiWPPluginBoilerplate\plugin\Hooks::class,
+    \BitskiWPPluginBoilerplate\plugin\Setup::class,
+];
 
 /**
  * Array of conditional classes that are only initialized if the corresponding plugin option is enabled.
