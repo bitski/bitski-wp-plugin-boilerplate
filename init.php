@@ -30,8 +30,9 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
  */
 $bootstrap_classes = [
     \BitskiWPPluginBoilerplate\plugin\Config::class,
-    \BitskiWPPluginBoilerplate\plugin\Hooks::class,
+    \BitskiWPPluginBoilerplate\plugin\Options::class,
     \BitskiWPPluginBoilerplate\plugin\Setup::class,
+    \BitskiWPPluginBoilerplate\plugin\Hooks::class,
 ];
 
 /**
@@ -42,7 +43,9 @@ $bootstrap_classes = [
  *
  * @var array $conditional_class_map
  */
-$conditional_class_map = [];
+$conditional_class_map = [
+    //'bitski-wp-plugin-boilerplate/option/lifecycle/load' => \BitskiWPPluginBoilerplate\plugin\Lifecycle::class,
+];
 
 /**
  * Instantiates and initializes core and feature classes unconditionally.

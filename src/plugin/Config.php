@@ -36,23 +36,8 @@ class Config
     public static array $options = [
         // Example: 'option-name' => 'default-value'
 
-        // Loading options
-
-        // Header options
-
-        // Footer options
-
-        // Single post options
-
-        // Archive page options
-
-        // Pages options
-
-        // Forms options
-
-        // Progressive web app (PWA) options
-
-        // Schema options
+        // Lifecycle options
+        'bitski-wp-plugin-boilerplate/option/lifecycle/load' => true,
 
         // Add more option filters as needed
     ];
