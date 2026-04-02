@@ -21,7 +21,7 @@
  * Domain Path: /languages
  */
 
-// Defines plugin core constants for plugin paths, URLs and identifiers.
+// Defines core plugin constants for plugin paths, URLs and identifiers.
 define('BITSKI_WP_PLUGIN_BOILERPLATE_FILE', __FILE__);
 define('BITSKI_WP_PLUGIN_BOILERPLATE_PATH', plugin_dir_path(BITSKI_WP_PLUGIN_BOILERPLATE_FILE));
 define('BITSKI_WP_PLUGIN_BOILERPLATE_URL', plugin_dir_url(BITSKI_WP_PLUGIN_BOILERPLATE_FILE));

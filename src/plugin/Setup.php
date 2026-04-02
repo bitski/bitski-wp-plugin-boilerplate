@@ -17,18 +17,7 @@ class Setup
      */
     public function init(): void
     {
-        add_action('plugins_loaded', [$this, 'setConfigVariables'], 5);
         add_action('plugins_loaded', [$this, 'loadTextdomain'], 10);
-    }
-
-    /**
-     * Sets plugin static configuration variables at runtime.
-     */
-    public function setConfigVariables(): void
-    {
-        Config::$path = dirname(__FILE__, 3);
-        Config::$file = Config::$path.'/bitski-wp-plugin-boilerplate.php';
-        Config::$url  = plugins_url('', Config::$file);
     }
 
     /**
@@ -36,6 +25,6 @@ class Setup
      */
     public function loadTextdomain(): void
     {
-        load_plugin_textdomain(Config::SLUG, false, Config::$path.'/languages');
+        load_plugin_textdomain(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG, false, BITSKI_WP_PLUGIN_BOILERPLATE_PATH.'/languages');
     }
 }

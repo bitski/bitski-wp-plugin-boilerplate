@@ -12,23 +12,6 @@ namespace BitskiWPPluginBoilerplate\plugin;
 class Config
 {
     /**
-     * Plugin identity constants.
-     *
-     * Set at compile time.
-     */
-    public const string SLUG = 'bitski-wp-plugin-boilerplate';
-    public const string VERSION = '0.1.3';
-
-    /**
-     * Plugin paths and URLs.
-     *
-     * Set via Config at runtime.
-     */
-    public static string $path = '';
-    public static string $file = '';
-    public static string $url = '';
-
-    /**
      * Centralized array to manage plugin options.
      * Key: option name, Value: option value
      * Usage: apply_filters('option-name', 'default-value')
