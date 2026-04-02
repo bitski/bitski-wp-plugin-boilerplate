@@ -44,7 +44,7 @@ $bootstrap_classes = [
  * @var array $conditional_class_map
  */
 $conditional_class_map = [
-    //'bitski-wp-plugin-boilerplate/option/lifecycle/load' => \BitskiWPPluginBoilerplate\plugin\Lifecycle::class,
+    'bitski-wp-plugin-boilerplate/option/lifecycle/load' => \BitskiWPPluginBoilerplate\plugin\Lifecycle::class,
 ];
 
 /**

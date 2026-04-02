@@ -20,7 +20,7 @@ class Config
         // Example: 'option-name' => 'default-value'
 
         // Lifecycle options
-        'bitski-wp-plugin-boilerplate/option/lifecycle/load' => true,
+        'bitski-wp-plugin-boilerplate/option/lifecycle/load' => false,
 
         // Add more option filters as needed
     ];
