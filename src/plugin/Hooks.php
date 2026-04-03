@@ -23,7 +23,8 @@ class Hooks
      * Registers base hooks.
      */
     protected function registerBaseHooks(): void
-    {}
+    {
+    }
 
     /**
      * Registers functional hooks.

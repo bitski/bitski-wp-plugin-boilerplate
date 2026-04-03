@@ -25,6 +25,10 @@ class Setup
      */
     public function loadTextdomain(): void
     {
-        load_plugin_textdomain(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG, false, BITSKI_WP_PLUGIN_BOILERPLATE_PATH.'/languages');
+        load_plugin_textdomain(
+            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG,
+            false,
+            BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/languages'
+        );
     }
 }
