@@ -85,6 +85,7 @@ class Options
 
     /**
      * Getter for plugin options by filter name.
+     *
      * Returns the default option if it is explicitly set (not null) and valid.
      * Otherwise, checks global Config options.
      *
@@ -114,5 +115,22 @@ class Options
 
         // Returns a default option as a fallback.
         return $defaultOption;
+    }
+
+    /**
+     * Getter for plugin options by filter name.
+     *
+     * This method relies on `apply_filters()`, defined in getOptionByFilter().
+     * Calls `apply_filters()` to fetch the filtered option, allowing for overrides via hooks.
+     *
+     * @param  string  $filter
+     * @param  mixed|null  $defaultOption
+     *
+     * @return mixed The filtered option value.
+     * @since 0.1.5
+     */
+    public static function get(string $filter, mixed $defaultOption = null): mixed
+    {
+        return apply_filters($filter, $defaultOption);
     }
 }
