@@ -90,9 +90,9 @@ class Options
      * Otherwise, checks global Config options.
      *
      * @param  string  $filter
-     * @param  mixed  $defaultOption  (default: null, for a fallback to global config option)
+     * @param  mixed|null  $defaultOption  (default: null, for a fallback to global config option)
      *
-     * @return mixed
+     * @return mixed The filtered option value.
      */
     public function getOptionByFilter(string $filter, mixed $defaultOption = null): mixed
     {
