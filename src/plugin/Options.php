@@ -16,14 +16,14 @@ class Options
      */
     public function init(): void
     {
-        $this->registerCssClassesFilters();   // CSS classes options filters.
+        $this->registerCssClassFilters();   // CSS classes options filters.
         $this->registerOptionFilters();       // Plugin options filters.
     }
 
     /**
-     * Registers CSS classes options filters.
+     * Registers CSS class options filters.
      */
-    protected function registerCssClassesFilters(): void
+    protected function registerCssClassFilters(): void
     {
         foreach (Config::$classes as $filter => $configClasses) {
             add_filter($filter, function ($localClasses = [], $merge = true) use ($filter) {
@@ -35,8 +35,7 @@ class Options
 
     /**
      * Getter for CSS classes by filter name.
-     * Returns a space-separated string of classes.
-     * Merges config classes with local classes if $merge is true.
+     * Returns a space-separated string, merging config and local classes if $merge is true.
      * Otherwise, returns local classes only.
      *
      * @param  string  $filter
