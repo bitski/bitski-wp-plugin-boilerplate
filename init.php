@@ -65,7 +65,7 @@ foreach ($bootstrap_classes as $class) {
  * Instantiates and initializes conditional classes based on plugin option filters.
  */
 foreach ($conditional_class_map as $filter => $class) {
-    if (apply_filters($filter, null)) {
+    if (\BitskiWPPluginBoilerplate\plugin\Options::get($filter)) {
         try {
             $instance = new $class();
             if (method_exists($instance, 'init')) {
