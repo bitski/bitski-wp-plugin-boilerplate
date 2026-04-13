@@ -1,7 +1,7 @@
 <?php
 
 // Exits if accessed directly.
-if (! defined('ABSPATH')) {
+if ( ! defined('ABSPATH')) {
     exit;
 }
 
@@ -25,6 +25,14 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
  * Array of core and feature plugin classes to be initialized automatically, can be extended or modified as needed.
  *
  * Core and feature classes that are initialized unconditionally.
+ *
+ * Note: The order of the classes in this array determines the initialization order.
+ * Classes earlier in the array will be initialized first.
+ * Initialization order:
+ * - Config   → base configuration
+ * - Options  → depends on Config
+ * - Setup    → registers core WordPress features
+ * - Hooks    → attaches runtime hooks
  *
  * @var array $bootstrap_classes
  */
@@ -57,7 +65,7 @@ $conditional_class_map = [
  * @var array $admin_class_map
  */
 $admin_class_map = [
-    'bitski-wp-plugin-boilerplate/option/admin/load'     => \BitskiWPPluginBoilerplate\plugin\Admin::class,
+    'bitski-wp-plugin-boilerplate/option/admin/load' => \BitskiWPPluginBoilerplate\plugin\Admin::class,
 ];
 
 /**
@@ -77,8 +85,8 @@ foreach ($bootstrap_classes as $class) {
 /**
  * Instantiates and initializes conditional classes based on plugin option filters.
  */
-foreach ($conditional_class_map as $filter => $class) {
-    if (\BitskiWPPluginBoilerplate\plugin\Options::get($filter)) {
+foreach ($conditional_class_map as $option_key => $class) {
+    if ((bool)\BitskiWPPluginBoilerplate\plugin\Options::get($option_key)) {
         try {
             $instance = new $class();
             if (method_exists($instance, 'init')) {
@@ -91,6 +99,21 @@ foreach ($conditional_class_map as $filter => $class) {
 }
 
 /**
- * Instantiates and initializes admin-specific classes based on plugin option filters.
+ * Instantiates and initializes conditional admin-specific classes based on plugin option filters.
+ *
+ * Only runs if the request is in the admin area and not an AJAX request.
  */
-
+if (is_admin() && ! wp_doing_ajax()) {
+    foreach ($admin_class_map as $option_key => $class) {
+        if ((bool)\BitskiWPPluginBoilerplate\plugin\Options::get($option_key)) {
+            try {
+                $instance = new $class();
+                if (method_exists($instance, 'init')) {
+                    $instance->init();
+                }
+            } catch (\Throwable $error) {
+                error_log($class . ' Error: ' . $error->getMessage());
+            }
+        }
+    }
+}
