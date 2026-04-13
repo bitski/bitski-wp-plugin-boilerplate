@@ -48,6 +48,19 @@ $conditional_class_map = [
 ];
 
 /**
+ * Array of admin-specific classes that are only initialized if the corresponding plugin option is enabled
+ * and the request is in the admin area.
+ *
+ * Each entry maps a filter name to the class that should be instantiated.
+ * Filter keys enable/disable optional plugin features via plugin options.
+ *
+ * @var array $admin_class_map
+ */
+$admin_class_map = [
+    'bitski-wp-plugin-boilerplate/option/admin/load'     => \BitskiWPPluginBoilerplate\plugin\Admin::class,
+];
+
+/**
  * Instantiates and initializes core and feature classes unconditionally.
  */
 foreach ($bootstrap_classes as $class) {
@@ -76,3 +89,8 @@ foreach ($conditional_class_map as $filter => $class) {
         }
     }
 }
+
+/**
+ * Instantiates and initializes admin-specific classes based on plugin option filters.
+ */
+
