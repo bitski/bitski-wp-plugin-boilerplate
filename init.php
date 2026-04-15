@@ -105,7 +105,7 @@ foreach ($conditional_class_map as $option_key => $class) {
  */
 if (is_admin() && ! wp_doing_ajax()) {
     foreach ($admin_class_map as $option_key => $class) {
-        if ((bool)\BitskiWPPluginBoilerplate\plugin\Options::get($option_key)) {
+        if (\BitskiWPPluginBoilerplate\plugin\Options::get($option_key)) {
             try {
                 $instance = new $class();
                 if (method_exists($instance, 'init')) {
