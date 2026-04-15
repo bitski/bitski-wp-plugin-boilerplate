@@ -17,6 +17,7 @@ class Admin
     public function init(): void
     {
         add_action('admin_menu', [$this, 'addSettingsPage']);
+        add_action('admin_init', [$this, 'registerSettings']);
     }
 
     /**
@@ -31,6 +32,25 @@ class Admin
             'manage_options',
             BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings',
             [$this, 'displaySettingsPage']
+        );
+    }
+
+    /**
+     * Registers the plugin settings.
+     *
+     * Uses the WordPress Settings API to register a settings group and its associated options.
+     * The settings group is named after the plugin slug with '_options_group' appended.
+     * The options are named after the plugin slug with '_options' appended.
+     * The options are stored together in a single database entry in the 'wp_options' table,
+     * using the plugin slug with '_options' appended as the option name.
+     *
+     * @since 0.2.2
+     */
+    public function registerSettings(): void
+    {
+        register_setting(
+            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options_group',
+            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options'
         );
     }
 
