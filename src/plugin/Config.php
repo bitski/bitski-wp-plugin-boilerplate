@@ -28,7 +28,7 @@ class Config
 
         // Admin settings page
         'bitski-wp-plugin-boilerplate/option/admin/load' => true,
-        'bitski-wp-plugin-boilerplate/option/admin/enabled' => true,
+        'bitski-wp-plugin-boilerplate/option/admin/enable-plugin' => true,
         'bitski-wp-plugin-boilerplate/option/admin/submit-button-label' => 'Submit',
 
         // Lifecycle options

@@ -26,12 +26,12 @@ class Admin
     public function addSettingsPage(): void
     {
         add_submenu_page(
-            'options-general.php',
-            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . ' Settings',
-            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . ' Settings',
-            'manage_options',
-            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings',
-            [$this, 'displaySettingsPage']
+                'options-general.php',
+                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . ' Settings',
+                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . ' Settings',
+                'manage_options',
+                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings',
+                [$this, 'displaySettingsPage']
         );
     }
 
@@ -49,9 +49,79 @@ class Admin
     public function registerSettings(): void
     {
         register_setting(
-            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options_group',
-            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options'
+                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options_group',
+                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options',
+                [
+                        'type'              => 'array',
+                        'sanitize_callback' => [$this, 'sanitizeOptions'],
+                ]
         );
+
+        add_settings_section(
+                'admin_settings_section',
+                'Admin Settings',
+                '__return_null',
+                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings'
+        );
+
+        add_settings_field(
+                'admin_option_enable_plugin',
+                'Enable plugin',
+                [$this, 'renderEnablePluginField'],
+                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings',
+                'admin_settings_section'
+        );
+
+        add_settings_field(
+                'admin_option_submit_button_label',
+                'Submit button label',
+                [$this, 'renderSubmitButtonLabelField'],
+                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings',
+                'admin_settings_section'
+        );
+    }
+
+    public function sanitizeOptions($input): array
+    {
+        return [
+                'admin_option_enable_plugin'       => (bool)$input['admin_option_enable_plugin'],
+                'admin_option_submit_button_label' => sanitize_text_field($input['admin_option_submit_button_label']),
+        ];
+    }
+
+    /**
+     * Renders the "Enable plugin" checkbox field.
+     */
+    public function renderEnablePluginField(): void
+    {
+        $options = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
+        $enabled = $options['admin_option_enable_plugin'] ?? true;
+        ?>
+        <input type="checkbox"
+               name="<?php
+               echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_enable_plugin]'; ?>"
+               value="1" <?php
+        checked($enabled, true); ?> />
+        <p class="description">Enable or disable the plugin.</p>
+        <?php
+    }
+
+    /**
+     * Renders the "Submit button label" text field.
+     */
+    public function renderSubmitButtonLabelField(): void
+    {
+        $options = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
+        $label   = $options['admin_option_submit_button_label'] ?? 'Submit';
+        ?>
+        <input type="text"
+               name="<?php
+               echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_submit_button_label]'; ?>"
+               value="<?php
+               echo esc_attr($label); ?>"
+               class="regular-text"/>
+        <p class="description">Set the submit button label.</p>
+        <?php
     }
 
     /**
