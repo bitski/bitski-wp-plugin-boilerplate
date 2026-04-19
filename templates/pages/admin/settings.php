@@ -27,9 +27,15 @@ if ( ! defined('ABSPATH')) {
         // WordPress Settings API, handles nonce, validation, and saving of settings.
         settings_fields(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options_group');
 
-        // Displays the registered settings fields and their fields for this page.
-        do_settings_sections(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings');
+        // Displays the registered settings fields for this page by calling their render methods from the Admin class. ?>
+        <div class="field bitski-wp-plugin-boilerplate-enable-plugin">
+            <?php $this->renderEnablePluginField(); ?>
+        </div>
+        <div class="field bitski-wp-plugin-boilerplate-submit-button-label">
+            <?php $this->renderSubmitButtonLabelField(); ?>
+        </div>
 
+        <?php
         // Displays a submit button.
         $options             = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
         $submit_button_label = $options['admin_option_submit_button_label'] ?? 'Submit';

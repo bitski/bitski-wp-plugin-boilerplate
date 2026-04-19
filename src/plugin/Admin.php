@@ -83,9 +83,13 @@ class Admin
 
     public function sanitizeOptions($input): array
     {
+        $input = is_array($input) ? $input : [];
+
         return [
-                'admin_option_enable_plugin'       => (bool)$input['admin_option_enable_plugin'],
-                'admin_option_submit_button_label' => sanitize_text_field($input['admin_option_submit_button_label']),
+                'admin_option_enable_plugin'       => ! empty($input['admin_option_enable_plugin']) ? 1 : 0,
+                'admin_option_submit_button_label' => sanitize_text_field(
+                        $input['admin_option_submit_button_label'] ?? 'Submit'
+                ),
         ];
     }
 
@@ -95,14 +99,16 @@ class Admin
     public function renderEnablePluginField(): void
     {
         $options = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
-        $enabled = $options['admin_option_enable_plugin'] ?? true;
+        $enabled = $options['admin_option_enable_plugin'] ?? 1;
         ?>
+        <label for="<?php
+        echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_enable_plugin]'; ?>">Enable plugin</label>
         <input type="checkbox"
                name="<?php
                echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_enable_plugin]'; ?>"
                value="1" <?php
-        checked($enabled, true); ?> />
-        <p class="description">Enable or disable the plugin.</p>
+        checked($enabled, 1); ?> />
+        <span class="description">Enable or disable the plugin.</span>
         <?php
     }
 
@@ -114,13 +120,16 @@ class Admin
         $options = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
         $label   = $options['admin_option_submit_button_label'] ?? 'Submit';
         ?>
+        <label for="<?php
+        echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_submit_button_label]'; ?>">Submit button
+            label</label>
         <input type="text"
                name="<?php
                echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_submit_button_label]'; ?>"
                value="<?php
                echo esc_attr($label); ?>"
                class="regular-text"/>
-        <p class="description">Set the submit button label.</p>
+        <span class="description">Set the submit button label.</span>
         <?php
     }
 
