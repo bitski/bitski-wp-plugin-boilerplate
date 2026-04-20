@@ -8,8 +8,6 @@
  * @since 0.2.1
  */
 
-use BitskiWPPluginBoilerplate\plugin\Options;
-
 // Exits if accessed directly.
 if ( ! defined('ABSPATH')) {
     exit;
@@ -17,7 +15,7 @@ if ( ! defined('ABSPATH')) {
 ?>
 
 <div class="wrap">
-    <h1>
+    <h1 style="color:<?php echo esc_attr($this->options['admin_option_h1_color']); ?>;">
         <?php
         echo esc_html(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . ' Settings'); ?>
     </h1>
@@ -31,14 +29,15 @@ if ( ! defined('ABSPATH')) {
         <div class="field bitski-wp-plugin-boilerplate-enable-plugin">
             <?php $this->renderEnablePluginField(); ?>
         </div>
+        <div class="field bitski-wp-plugin-boilerplate-submit-button-background-color">
+            <?php $this->renderH1ColorField(); ?>
+        </div>
         <div class="field bitski-wp-plugin-boilerplate-submit-button-label">
             <?php $this->renderSubmitButtonLabelField(); ?>
         </div>
 
         <?php
         // Displays a submit button.
-        $options             = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
-        $submit_button_label = $options['admin_option_submit_button_label'] ?? 'Submit';
-        submit_button(esc_html($submit_button_label)); ?>
+        submit_button(esc_html($this->options['admin_option_submit_button_label'] ?? 'Submit')); ?>
     </form>
 </div>
