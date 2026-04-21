@@ -12,15 +12,22 @@ namespace BitskiWPPluginBoilerplate\plugin;
 class Admin
 {
     /**
-     * Plugin options, defines the default values.
+     * Default plugin options used as fallback values.
      *
      * @since 0.2.3
      */
-    private array $options = [
+    private array $defaultOptions = [
             'admin_option_enable_plugin'       => 0,
             'admin_option_h1_color'            => '#0073aa',
             'admin_option_submit_button_label' => 'Submit',
     ];
+
+    /**
+     * Current plugin options loaded from storage and merged with defaults.
+     *
+     * @since 0.2.3
+     */
+    private array $options = [];
 
     /**
      * Initializes plugin admin interface.
@@ -33,7 +40,7 @@ class Admin
         $savedOptions = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
         $savedOptions = is_array($savedOptions) ? $savedOptions : [];
 
-        $this->options = array_replace($this->options, $savedOptions);
+        $this->options = array_replace($this->defaultOptions, $savedOptions);
     }
 
     /**
@@ -82,41 +89,15 @@ class Admin
                         'sanitize_callback' => [$this, 'sanitizeOptions'],
                 ]
         );
-
-        add_settings_section(
-                'admin_settings_section',
-                'Admin Settings',
-                '__return_null',
-                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings'
-        );
-
-        add_settings_field(
-                'admin_option_enable_plugin',
-                'Enable plugin',
-                [$this, 'renderEnablePluginField'],
-                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings',
-                'admin_settings_section'
-        );
-
-        add_settings_field(
-                'admin_option_h1_color',
-                'H1 color',
-                [$this, 'renderH1ColorField'],
-                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings',
-                'admin_settings_section'
-        );
-
-        add_settings_field(
-                'admin_option_submit_button_label',
-                'Submit button label',
-                [$this, 'renderSubmitButtonLabelField'],
-                BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings',
-                'admin_settings_section'
-        );
     }
 
     /**
      * Sanitizes the plugin options.
+     * This method is called when the plugin options are saved.
+     *
+     * 1. Converts the 'admin_option_enable_plugin' option to 1 or 0.
+     * 2. Sanitizes the 'admin_option_h1_color' option using sanitize_hex_color().
+     * 3. Sanitizes the 'admin_option_submit_button_label' option using sanitize_text_field().
      */
     public function sanitizeOptions($input): array
     {
@@ -126,9 +107,9 @@ class Admin
                 'admin_option_enable_plugin'       => ! empty($input['admin_option_enable_plugin']) ? 1 : 0,
                 'admin_option_h1_color'            => sanitize_hex_color(
                         $input['admin_option_h1_color'] ?? ''
-                ) ?: '#0073aa',
+                ) ?: $this->defaultOptions['admin_option_h1_color'],
                 'admin_option_submit_button_label' => sanitize_text_field(
-                        $input['admin_option_submit_button_label'] ?? 'Submit'
+                        $input['admin_option_submit_button_label'] ?? $this->defaultOptions['admin_option_submit_button_label']
                 ),
         ];
     }
