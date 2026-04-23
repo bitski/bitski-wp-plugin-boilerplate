@@ -19,7 +19,7 @@ class Admin
     private array $defaultOptions = [
             'admin_option_enable_plugin'       => 0,
             'admin_option_h1_color'            => '#0073aa',
-            'admin_option_submit_button_label' => 'Submit',
+            'admin_option_submit_button_label' => 'Submit'
     ];
 
     /**
@@ -36,6 +36,7 @@ class Admin
     {
         add_action('admin_menu', [$this, 'addSettingsPage']);
         add_action('admin_init', [$this, 'registerSettings']);
+        add_action('admin_post_' . BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_reset_options', [$this, 'resetOptions']);
 
         $savedOptions = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
         $savedOptions = is_array($savedOptions) ? $savedOptions : [];
@@ -103,6 +104,7 @@ class Admin
     {
         $input = is_array($input) ? $input : [];
 
+        // Sanitizes options.
         return [
                 'admin_option_enable_plugin'       => ! empty($input['admin_option_enable_plugin']) ? 1 : 0,
                 'admin_option_h1_color'            => sanitize_hex_color(
@@ -117,7 +119,7 @@ class Admin
     /**
      * Renders the "Enable plugin" checkbox field.
      */
-    public function renderEnablePluginField(): void
+    private function renderEnablePluginField(): void
     { ?>
         <label for="<?php
         echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_enable_plugin]'; ?>">Enable plugin</label>
@@ -127,7 +129,6 @@ class Admin
                value="1" <?php
         checked($this->options['admin_option_enable_plugin']); ?> />
         <span class="description">Enable or disable the plugin.</span>
-
         <?php
     }
 
@@ -136,7 +137,7 @@ class Admin
      *
      * @since 0.2.3
      */
-    public function renderH1ColorField(): void
+    private function renderH1ColorField(): void
     { ?>
         <label for="<?php
         echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_h1_color]'; ?>">H1 color</label>
@@ -145,6 +146,8 @@ class Admin
                echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_h1_color]'; ?>"
                value="<?php
                echo esc_attr($this->options['admin_option_h1_color']); ?>"
+                <?php
+                echo ! $this->isPluginEnabled() ? ' disabled' : ''; ?>
         />
         <?php
     }
@@ -152,7 +155,7 @@ class Admin
     /**
      * Renders the "Submit button label" text field.
      */
-    public function renderSubmitButtonLabelField(): void
+    private function renderSubmitButtonLabelField(): void
     { ?>
         <label for="<?php
         echo BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options[admin_option_submit_button_label]'; ?>">Submit button
@@ -168,6 +171,37 @@ class Admin
         />
         <span class="description">Set the submit button label.</span>
         <?php
+    }
+
+    /**
+     * Resets the plugin options to their default values.
+     *
+     * @since 0.2.4
+     */
+    public function resetOptions(): void
+    {
+        $nonceName   = BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_nonce';
+        $nonceAction = BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_reset_options';
+        $baseUrl     = admin_url('options-general.php?page=' . BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '-settings');
+
+        // Guard clauses: blocks unauthorized requests immediately.
+        if ( ! current_user_can('manage_options') ||
+             ! isset($_POST[$nonceName]) ||
+             ! wp_verify_nonce(
+                     $_POST[$nonceName],
+                     $nonceAction
+             )) {
+            // Redirects to the settings page with the error query parameter.
+            wp_safe_redirect($baseUrl . '&error=unauthorized');
+            exit;
+        }
+
+        // Resets options to default values.
+        update_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', $this->defaultOptions);
+
+        // Redirects to the settings page with the success query parameter.
+        wp_safe_redirect($baseUrl . '&reset=1');
+        exit;
     }
 
     /**
