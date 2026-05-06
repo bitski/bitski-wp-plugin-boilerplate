@@ -32,7 +32,13 @@ class Config
         // Lifecycle options
         'bitski-wp-plugin-boilerplate/option/lifecycle/load' => false,
 
-        // Add more option filters as needed
+        // Example REST feature
+        'bitski-wp-plugin-boilerplate/option/example-rest-feature' => true,
+
+        // REST API options
+        'bitski-wp-plugin-boilerplate/option/rest/api/load' => true,
+
+        // Add more option filters as needed.
     ];
 
     /**
