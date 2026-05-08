@@ -7,7 +7,7 @@
  * @since 0.1.4
  */
 
-namespace BitskiWPPluginBoilerplate\plugin;
+namespace BitskiWPPluginBoilerplate\core;
 
 class Lifecycle
 {

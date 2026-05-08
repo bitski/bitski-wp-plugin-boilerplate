@@ -5,7 +5,7 @@
  * @since 0.1.3
  */
 
-namespace BitskiWPPluginBoilerplate\plugin;
+namespace BitskiWPPluginBoilerplate\core;
 
 class Setup
 {

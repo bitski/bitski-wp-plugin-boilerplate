@@ -13,7 +13,7 @@
 
 namespace BitskiWPPluginBoilerplate\rest;
 
-use BitskiWPPluginBoilerplate\plugin\Options;
+use BitskiWPPluginBoilerplate\core\Options;
 use WP_REST_Request;
 use WP_REST_Response;
 

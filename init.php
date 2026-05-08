@@ -37,10 +37,10 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
  * @var array $bootstrap_classes
  */
 $bootstrap_classes = [
-    \BitskiWPPluginBoilerplate\plugin\Config::class,
-    \BitskiWPPluginBoilerplate\plugin\Options::class,
-    \BitskiWPPluginBoilerplate\plugin\Setup::class,
-    \BitskiWPPluginBoilerplate\plugin\Hooks::class,
+    \BitskiWPPluginBoilerplate\core\Config::class,
+    \BitskiWPPluginBoilerplate\core\Options::class,
+    \BitskiWPPluginBoilerplate\core\Setup::class,
+    \BitskiWPPluginBoilerplate\core\Hooks::class,
 ];
 
 /**
@@ -52,7 +52,7 @@ $bootstrap_classes = [
  * @var array $conditional_class_map
  */
 $conditional_class_map = [
-    'bitski-wp-plugin-boilerplate/option/lifecycle/load' => \BitskiWPPluginBoilerplate\plugin\Lifecycle::class,
+    'bitski-wp-plugin-boilerplate/option/lifecycle/load' => \BitskiWPPluginBoilerplate\core\Lifecycle::class,
     'bitski-wp-plugin-boilerplate/option/rest/api/load'  => \BitskiWPPluginBoilerplate\rest\Api::class,
 ];
 
@@ -66,7 +66,7 @@ $conditional_class_map = [
  * @var array $admin_class_map
  */
 $admin_class_map = [
-    'bitski-wp-plugin-boilerplate/option/admin/load' => \BitskiWPPluginBoilerplate\plugin\Admin::class,
+    'bitski-wp-plugin-boilerplate/option/admin/load' => \BitskiWPPluginBoilerplate\admin\Admin::class,
 ];
 
 /**
@@ -87,7 +87,7 @@ foreach ($bootstrap_classes as $class) {
  * Instantiates and initializes conditional classes based on plugin option filters.
  */
 foreach ($conditional_class_map as $option_key => $class) {
-    if (\BitskiWPPluginBoilerplate\plugin\Options::get($option_key)) {
+    if (\BitskiWPPluginBoilerplate\core\Options::get($option_key)) {
         try {
             $instance = new $class();
             if (method_exists($instance, 'init')) {
@@ -106,7 +106,7 @@ foreach ($conditional_class_map as $option_key => $class) {
  */
 if (is_admin() && ! wp_doing_ajax()) {
     foreach ($admin_class_map as $option_key => $class) {
-        if (\BitskiWPPluginBoilerplate\plugin\Options::get($option_key)) {
+        if (\BitskiWPPluginBoilerplate\core\Options::get($option_key)) {
             try {
                 $instance = new $class();
                 if (method_exists($instance, 'init')) {
