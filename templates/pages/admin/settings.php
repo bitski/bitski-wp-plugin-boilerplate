@@ -3,6 +3,7 @@
  * Page template for the plugin admin settings page.
  *
  * Contains a Settings API form and an admin-post action form.
+ * Displays Settings API admin notices automatically.
  *
  * Loaded via the Admin class.
  *
@@ -21,6 +22,10 @@ if ( ! defined('ABSPATH')) {
         <?php
         echo esc_html(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . ' Settings'); ?>
     </h1>
+
+    <!-- Settings API notices. -->
+    <?php
+    settings_errors(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options'); ?>
 
     <!-- Settings API form (stores plugin options). -->
     <form action="options.php" method="post">

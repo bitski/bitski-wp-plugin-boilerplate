@@ -37,6 +37,7 @@ class Admin
         add_action('admin_menu', [$this, 'addSettingsPage']);
         add_action('admin_init', [$this, 'registerSettings']);
         add_action('admin_post_' . BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_reset_options', [$this, 'resetOptions']);
+        add_action('admin_notices', [$this, 'displayNonPersistentAdminNotices']);
 
         $savedOptions = get_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', []);
         $savedOptions = is_array($savedOptions) ? $savedOptions : [];
@@ -174,6 +175,59 @@ class Admin
     }
 
     /**
+     * Adds a non-persistent admin notice.
+     *
+     * Stores notice in a transient for the next page load.
+     *
+     * @since 0.4.0
+     */
+    private function addNonPersistentAdminNotice(string $message, string $type = 'info'): void
+    {
+        if ( ! in_array($type, ['success', 'error', 'warning', 'info'], true)) {
+            $type = 'info';
+        }
+
+        $transientName = BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_admin_notices';
+
+        $notices = get_transient($transientName);
+        if ( ! is_array($notices)) {
+            $notices = [];
+        }
+
+        $notices[] = ['message' => $message, 'type' => $type];
+
+        set_transient(
+                $transientName,
+                $notices,
+                30 // 30 seconds lifetime, usually enough for redirect
+        );
+    }
+
+    /**
+     * Displays all manually added, non-persistent admin notices.
+     *
+     * @since 0.4.0
+     */
+    public function displayNonPersistentAdminNotices(): void
+    {
+        $transientName = BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_admin_notices';
+        $notices       = get_transient($transientName);
+
+        //
+        if ($notices && is_array($notices)) {
+            foreach ($notices as $notice) {
+                echo '<div class="notice notice-' . esc_attr(
+                                $notice['type']
+                        ) . ' is-dismissible"><p><strong>' . esc_html(
+                             $notice['message']
+                     ) . '</strong></p></div>';
+            }
+
+            delete_transient($transientName);
+        }
+    }
+
+    /**
      * Resets the plugin options to their default values.
      *
      * @since 0.2.4
@@ -191,16 +245,20 @@ class Admin
                      $_POST[$nonceName],
                      $nonceAction
              )) {
+            $this->addNonPersistentAdminNotice('You are not authorized to perform this action.', 'error');
+
             // Redirects to the settings page with the error query parameter.
-            wp_safe_redirect($baseUrl . '&error=unauthorized');
+            wp_safe_redirect($baseUrl);
             exit;
         }
 
         // Resets options to default values.
         update_option(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . '_options', $this->defaultOptions);
 
+        $this->addNonPersistentAdminNotice('Options have been reset to defaults.', 'success');
+
         // Redirects to the settings page with the success query parameter.
-        wp_safe_redirect($baseUrl . '&reset=1');
+        wp_safe_redirect($baseUrl);
         exit;
     }
 
@@ -209,7 +267,7 @@ class Admin
      */
     public function displaySettingsPage(): void
     {
-        // Check user capabilities.
+        // Checks user capabilities.
         if ( ! current_user_can('manage_options')) {
             return;
         }
