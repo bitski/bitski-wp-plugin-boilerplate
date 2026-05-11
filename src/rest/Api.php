@@ -32,7 +32,14 @@ class Api
      */
     public function registerRestRoutes(): void
     {
-        // Registers the 'example-rest-feature' REST route if the feature is enabled in config options.
+        // Registers the 'health' route.
+        register_rest_route('bitski-wp-plugin-boilerplate/v1', '/health', [
+            'methods'             => 'GET',
+            'callback'            => [$this, 'handleHealthEndpoint'],
+            'permission_callback' => '__return_true'
+        ]);
+
+        // Conditionally registers the 'example-rest-feature' REST route if the feature is enabled in config options.
         if (Options::get('bitski-wp-plugin-boilerplate/option/example-rest-feature')) {
             register_rest_route('bitski-wp-plugin-boilerplate/v1', '/example-rest-feature', [
                 'methods'             => 'GET',
@@ -51,6 +58,20 @@ class Api
     }
 
     /**
+     * Handles the health endpoint.
+     *
+     * @since 1.0.4
+     */
+    public function handleHealthEndpoint(): WP_REST_Response
+    {
+        return new WP_REST_Response([
+            'status'    => 'ok',
+            'message'   => 'Plugin is healthy.',
+            'timestamp' => time(),
+        ]);
+    }
+
+    /**
      * Example REST feature endpoint handler.
      *
      * Returns a basic JSON response.
@@ -59,16 +80,19 @@ class Api
      *
      * @return WP_REST_Response
      */
-    public function handleExampleRestFeatureEndPoint(WP_REST_Request $request): WP_REST_Response
+    public function handleExampleRestFeatureEndpoint(WP_REST_Request $request): WP_REST_Response
     {
         // Extracts the 'param' request parameter with default.
         $param = $request->get_param('param') ?: 'default-value';
 
         // Returns a JSON response with the 'param' value.
         return new WP_REST_Response([
-            'success' => true,
-            'message' => 'This is an example plugin REST endpoint.',
-            'param'   => $param,
+            'status'    => 'ok',
+            'message'   => 'Example REST endpoint reached successfully.',
+            'timestamp' => time(),
+            'data'      => [
+                'param' => $param,
+            ]
         ]);
     }
 }
