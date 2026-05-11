@@ -17,11 +17,8 @@ if ( ! defined('ABSPATH')) {
 ?>
 
 <div class="wrap">
-    <h1 style="color:<?php
-    echo esc_attr($this->options['admin_option_h1_color']); ?>;">
-        <?php
-        echo esc_html(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG . ' Settings'); ?>
-    </h1>
+    <?php
+    $this->renderH1(); ?>
 
     <!-- Settings API notices. -->
     <?php

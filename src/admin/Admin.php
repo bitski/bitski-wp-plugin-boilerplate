@@ -117,6 +117,10 @@ class Admin
         ];
     }
 
+    private function renderH1() {
+        echo '<h1 style="color:'.$this->options['admin_option_h1_color'].';">'.esc_html(BITSKI_WP_PLUGIN_BOILERPLATE_SLUG).' Settings</h1>';
+    }
+
     /**
      * Renders the "Enable plugin" checkbox field.
      */
