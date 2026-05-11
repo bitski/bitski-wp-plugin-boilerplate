@@ -60,7 +60,7 @@ class Api
     /**
      * Handles the health endpoint.
      *
-     * @since 1.0.4
+     * @since 0.4.1
      */
     public function handleHealthEndpoint(): WP_REST_Response
     {
