@@ -64,11 +64,7 @@ class Api
      */
     public function handleHealthEndpoint(): WP_REST_Response
     {
-        return new WP_REST_Response([
-            'status'    => 'ok',
-            'message'   => 'Plugin is healthy.',
-            'timestamp' => time(),
-        ]);
+        return $this->createJsonResponse('ok', 'Plugin is healthy.');
     }
 
     /**
@@ -86,13 +82,23 @@ class Api
         $param = $request->get_param('param') ?: 'default-value';
 
         // Returns a JSON response with the 'param' value.
+        return $this->createJsonResponse('ok', 'Example REST endpoint reached successfully.', ['param' => $param,]);
+    }
+
+    /**
+     * Factory for WP_REST_Response.
+     *
+     * Generates a standardized JSON REST API response with status, message, timestamp, and optional data.
+     *
+     * @since 0.4.1
+     */
+    private function createJsonResponse(string $status, string $message, array $data = []): WP_REST_Response
+    {
         return new WP_REST_Response([
-            'status'    => 'ok',
-            'message'   => 'Example REST endpoint reached successfully.',
+            'status'    => $status,
+            'message'   => $message,
             'timestamp' => time(),
-            'data'      => [
-                'param' => $param,
-            ]
+            'data'      => $data
         ]);
     }
 }
