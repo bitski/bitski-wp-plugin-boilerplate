@@ -27,16 +27,19 @@ class Config
         // Example: 'option-name' => 'global-value'
 
         // Admin settings page
-        'bitski-wp-plugin-boilerplate/option/admin/load' => true,
+        'bitski-wp-plugin-boilerplate/option/admin/load'                       => true,
 
         // Lifecycle options
-        'bitski-wp-plugin-boilerplate/option/lifecycle/load' => false,
+        'bitski-wp-plugin-boilerplate/option/lifecycle/load'                   => false,
 
         // Example REST feature
-        'bitski-wp-plugin-boilerplate/option/example-rest-feature' => true,
+        'bitski-wp-plugin-boilerplate/option/example-rest-feature'             => true,
 
         // REST API options
-        'bitski-wp-plugin-boilerplate/option/rest/api/load' => true,
+        'bitski-wp-plugin-boilerplate/option/rest/api/load'                    => true,
+
+        // Integration with external plugins or modules - example adapter
+        'bitski-wp-plugin-boilerplate/option/integration/example-adapter/load' => false,
 
         // Add more option filters as needed.
     ];
