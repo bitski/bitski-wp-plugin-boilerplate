@@ -28,7 +28,7 @@ define('BITSKI_WP_PLUGIN_BOILERPLATE_URL', plugin_dir_url(BITSKI_WP_PLUGIN_BOILE
 define('BITSKI_WP_PLUGIN_BOILERPLATE_SLUG', 'bitski-wp-plugin-boilerplate');
 define('BITSKI_WP_PLUGIN_BOILERPLATE_VERSION', '0.6.0');
 
-// Loads the plugin init file.
-if (file_exists(__DIR__ . '/init.php')) {
-    require_once __DIR__ . '/init.php';
+// Loads the plugin bootstrap file.
+if (file_exists(__DIR__ . '/bootstrap.php')) {
+    require_once __DIR__ . '/bootstrap.php';
 }
