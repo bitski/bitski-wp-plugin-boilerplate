@@ -24,36 +24,38 @@ class AssetsLoader
      */
     public function enqueueFrontendAssets(): void
     {
-        $pluginVersion = BITSKI_WP_PLUGIN_BOILERPLATE_VERSION;
-        $pluginUri     = BITSKI_WP_PLUGIN_BOILERPLATE_URL;
-        $pluginDir     = BITSKI_WP_PLUGIN_BOILERPLATE_PATH;
-
         // Determines main JS file, prefers minified version if available.
-        $pluginMainScript = file_exists($pluginDir . '/assets/js/main.min.js') ? 'main.min.js' : 'main.js';
+        $pluginMainScript = file_exists(
+            BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/js/main.min.js'
+        ) ? 'main.min.js' : 'main.js';
 
         // CSS
         //
         // Main plugin CSS
-        wp_enqueue_style(
-            'bitski-wp-plugin-boilerplate-frontend-style',
-            $pluginUri . '/assets/css/main.min.css',
-            [],
-            $pluginVersion
-        );
+        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/main.min.css')) {
+            wp_enqueue_style(
+                'bitski-wp-plugin-boilerplate-frontend-style',
+                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/css/main.min.css',
+                [],
+                BITSKI_WP_PLUGIN_BOILERPLATE_VERSION
+            );
+        }
 
         // Scripts
         //
         // Main plugin JS (ESM module)
         // Requires WordPress 6.5 or higher for native wp_enqueue_script_module() support.
-        wp_enqueue_script_module(
-            'bitski-wp-plugin-boilerplate-frontend-script',
-            $pluginUri . '/assets/js/' . $pluginMainScript,
-            [],
-            $pluginVersion,
-            [
-                'in_footer' => true,
-            ]
-        );
+        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/js/' . $pluginMainScript)) {
+            wp_enqueue_script_module(
+                'bitski-wp-plugin-boilerplate-frontend-script',
+                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/js/' . $pluginMainScript,
+                [],
+                BITSKI_WP_PLUGIN_BOILERPLATE_VERSION,
+                [
+                    'in_footer' => true,
+                ]
+            );
+        }
     }
 
     /**
@@ -61,18 +63,17 @@ class AssetsLoader
      */
     public function enqueueAdminAssets(): void
     {
-        $pluginVersion = BITSKI_WP_PLUGIN_BOILERPLATE_VERSION;
-        $pluginUri     = BITSKI_WP_PLUGIN_BOILERPLATE_URL;
-
         // CSS
         //
         // Main plugin admin CSS
-        wp_enqueue_style(
-            'bitski-wp-plugin-boilerplate-admin-style',
-            $pluginUri . '/assets/css/admin.min.css',
-            [],
-            $pluginVersion
-        );
+        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/admin.min.css')) {
+            wp_enqueue_style(
+                'bitski-wp-plugin-boilerplate-admin-style',
+                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/css/admin.min.css',
+                [],
+                BITSKI_WP_PLUGIN_BOILERPLATE_VERSION
+            );
+        }
     }
 
     /**
@@ -82,17 +83,16 @@ class AssetsLoader
      */
     public function enqueueBlockEditorAssets(): void
     {
-        $pluginVersion = BITSKI_WP_PLUGIN_BOILERPLATE_VERSION;
-        $pluginUri     = BITSKI_WP_PLUGIN_BOILERPLATE_URL;
-
         // CSS
         //
         // Block editor style
-        wp_enqueue_style(
-            'bitski-wp-plugin-boilerplate-block-editor-style',
-            $pluginUri . '/assets/css/editor.css',
-            [],
-            $pluginVersion
-        );
+        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/editor.css')) {
+            wp_enqueue_style(
+                'bitski-wp-plugin-boilerplate-block-editor-style',
+                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/css/editor.css',
+                [],
+                BITSKI_WP_PLUGIN_BOILERPLATE_VERSION
+            );
+        }
     }
 }
