@@ -24,18 +24,21 @@ class AssetsLoader
      */
     public function enqueueFrontendAssets(): void
     {
-        // Determines main JS file, prefers minified version if available.
-        $pluginMainScript = file_exists(
+        // Determines main frontend CSS & JS files, prefers minified versions if available.
+        $pluginFrontendMainStyle = file_exists(
+            BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/main.min.css'
+        ) ? 'main.min.css' : 'main.css';
+        $pluginFrontendMainScript = file_exists(
             BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/js/main.min.js'
         ) ? 'main.min.js' : 'main.js';
 
         // CSS
         //
         // Main plugin CSS
-        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/main.min.css')) {
+        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/' . $pluginFrontendMainStyle)) {
             wp_enqueue_style(
                 'bitski-wp-plugin-boilerplate-frontend-style',
-                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/css/main.min.css',
+                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/css/' . $pluginFrontendMainStyle,
                 [],
                 BITSKI_WP_PLUGIN_BOILERPLATE_VERSION
             );
@@ -45,10 +48,10 @@ class AssetsLoader
         //
         // Main plugin JS (ESM module)
         // Requires WordPress 6.5 or higher for native wp_enqueue_script_module() support.
-        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/js/' . $pluginMainScript)) {
+        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/js/' . $pluginFrontendMainScript)) {
             wp_enqueue_script_module(
                 'bitski-wp-plugin-boilerplate-frontend-script',
-                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/js/' . $pluginMainScript,
+                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/js/' . $pluginFrontendMainScript,
                 [],
                 BITSKI_WP_PLUGIN_BOILERPLATE_VERSION,
                 [
@@ -63,13 +66,18 @@ class AssetsLoader
      */
     public function enqueueAdminAssets(): void
     {
+        // Determines main admin CSS file, prefers minified version if available.
+        $pluginAdminMainStyle = file_exists(
+            BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/admin.min.css'
+        ) ? 'admin.min.css' : 'admin.css';
+
         // CSS
         //
         // Main plugin admin CSS
-        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/admin.min.css')) {
+        if (file_exists(BITSKI_WP_PLUGIN_BOILERPLATE_PATH . '/assets/css/' . $pluginAdminMainStyle)) {
             wp_enqueue_style(
                 'bitski-wp-plugin-boilerplate-admin-style',
-                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/css/admin.min.css',
+                BITSKI_WP_PLUGIN_BOILERPLATE_URL . '/assets/css/' . $pluginAdminMainStyle,
                 [],
                 BITSKI_WP_PLUGIN_BOILERPLATE_VERSION
             );

@@ -17,6 +17,6 @@
     <!-- PSR-12 standards -->
     <rule ref="PSR12"/>
 
-   <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>vendor/*</exclude-pattern>
     <exclude-pattern>**/*.min.*</exclude-pattern>
 </ruleset>
