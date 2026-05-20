@@ -33,10 +33,10 @@ class Config
         'bitski-wp-plugin-boilerplate/option/lifecycle/load'                   => false,
 
         // AssetsLoader
-        'bitski-wp-plugin-boilerplate/option/assets/load'                      => true,
+        'bitski-wp-plugin-boilerplate/option/assets/load'                      => false,
 
         // Example REST feature
-        'bitski-wp-plugin-boilerplate/option/example-rest-feature'             => true,
+        'bitski-wp-plugin-boilerplate/option/example-rest-feature'             => false,
 
         // REST API options
         'bitski-wp-plugin-boilerplate/option/rest/api/load'                    => true,

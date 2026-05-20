@@ -47,9 +47,13 @@ class Api
                 'permission_callback' => '__return_true',
                 'args'                => [
                     'param' => [
-                        'type'        => 'string',
-                        'required'    => false,
-                        'description' => 'Example query parameter.',
+                        'type'              => 'string',
+                        'required'          => false,
+                        'description'       => 'Example query parameter.',
+                        'validate_callback' => static function ($value) {
+                            return is_string($value) && ! empty($value);
+                        },
+                        'sanitize_callback' => 'sanitize_text_field',
                     ],
                 ]
             ]);
