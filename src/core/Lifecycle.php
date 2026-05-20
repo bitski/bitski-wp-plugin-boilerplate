@@ -18,7 +18,8 @@ class Lifecycle
     {
         register_activation_hook(BITSKI_WP_PLUGIN_BOILERPLATE_FILE, [$this, 'activate']);
         register_deactivation_hook(BITSKI_WP_PLUGIN_BOILERPLATE_FILE, [$this, 'deactivate']);
-        register_uninstall_hook(BITSKI_WP_PLUGIN_BOILERPLATE_FILE, [self::class, 'uninstall']); // Static callback required for this WordPress hook.
+        register_uninstall_hook(BITSKI_WP_PLUGIN_BOILERPLATE_FILE, [self::class, 'uninstall']
+        ); // Static callback required for this WordPress hook.
     }
 
     /**
@@ -44,5 +45,26 @@ class Lifecycle
     public static function uninstall(): void
     {
         error_log('Plugin uninstalled');
+
+        // Deletes all plugin options registered in the table 'wp_options'.
+        $pluginOptionsToDelete = [
+            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG.'_options',
+            // Add other options to be deleted here.
+        ];
+        foreach ($pluginOptionsToDelete as $option) {
+            delete_option($option);
+        }
+
+        // Deletes all plugin transients registered in the table 'wp_options'.
+        $pluginTransientsToDelete = [
+            BITSKI_WP_PLUGIN_BOILERPLATE_SLUG.'_admin_notices',
+            // Add other transients to be deleted here.
+        ];
+        foreach ($pluginTransientsToDelete as $transient) {
+            delete_transient($transient);
+        }
+
+        // Add other plugin-specific cleanup logic here.
+        // For example, deleting all posts of a custom post type the plugin creates.
     }
 }
