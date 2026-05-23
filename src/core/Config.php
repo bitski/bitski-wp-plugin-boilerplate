@@ -29,9 +29,6 @@ class Config
         // Admin settings page
         'bitski-wp-plugin-boilerplate/option/admin/load'                       => true,
 
-        // Lifecycle options
-        'bitski-wp-plugin-boilerplate/option/lifecycle/load'                   => false,
-
         // AssetsLoader
         'bitski-wp-plugin-boilerplate/option/assets/load'                      => false,
 

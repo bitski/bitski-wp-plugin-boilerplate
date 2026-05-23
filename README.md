@@ -8,7 +8,7 @@
 Slim WordPress plugin boilerplate integrating PHP OOP principles and modular architecture for high-performance
 development.
 
-v0.7.1 | GPL v3+
+v1.0.0 | GPL v3+
 
 ## Disclaimer
 
@@ -64,8 +64,7 @@ vendor/bin/phpcs
 
 ### Entry points
 
-PHP: `src/` (PSR-4 namespace: BitskiWPTheme\*) → `src/theme/` (Initialization order: Config → Options → Setup → Hooks →
-PWA → Schema)
+PHP: `src/` (PSR-4 namespace: BitskiWPTheme\*) → `src/theme/` (Initialization order: Config → Options → Setup → Lifecycle → Hooks → PWA → Schema)
 
 Bootstrap: bitski-wp-plugin-boilerplate.php → bootstrap.php
 
@@ -75,7 +74,7 @@ Bootstrap: bitski-wp-plugin-boilerplate.php → bootstrap.php
 ├── src/                  # PHP PSR-4 Namespace: BitskiWPPluginBoilerplate\* (subfolders = sub-namespaces)
 │   ├── admin/            # Admin pages, settings, notices
 │   ├── assets/           # Assets loader: Enqueues, conditional loading
-│   ├── core/             # Core plugin classes – Initialization order: Config → Options → Setup → Hooks → Lifecycle
+│   ├── core/             # Core plugin classes – Initialization order: Config → Options → Setup → Lifecycle → Hooks
 │   ├── integration/      # Third-party integrations / adapters
 │   └── rest/             # REST API endpoints
 ├── templates/            # Admin / frontend template partials

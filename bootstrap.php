@@ -29,10 +29,11 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
  * Note: The order of the classes in this array determines the initialization order.
  * Classes earlier in the array will be initialized first.
  * Initialization order:
- * - Config   → base configuration
- * - Options  → depends on Config
- * - Setup    → registers core WordPress features
- * - Hooks    → attaches runtime hooks
+ * - Config     → base configuration
+ * - Options    → depends on Config
+ * - Setup      → registers core WordPress features
+ * - Lifecycle  → handles plugin lifecycle events
+ * - Hooks      → attaches runtime hooks
  *
  * @var array $bootstrap_classes
  */
@@ -40,6 +41,7 @@ $bootstrap_classes = [
     \BitskiWPPluginBoilerplate\core\Config::class,
     \BitskiWPPluginBoilerplate\core\Options::class,
     \BitskiWPPluginBoilerplate\core\Setup::class,
+    \BitskiWPPluginBoilerplate\core\Lifecycle::class,
     \BitskiWPPluginBoilerplate\core\Hooks::class,
 ];
 
@@ -52,7 +54,6 @@ $bootstrap_classes = [
  * @var array $conditional_class_map
  */
 $conditional_class_map = [
-    'bitski-wp-plugin-boilerplate/option/lifecycle/load' => \BitskiWPPluginBoilerplate\core\Lifecycle::class,
     'bitski-wp-plugin-boilerplate/option/assets/load'    => \BitskiWPPluginBoilerplate\assets\AssetsLoader::class,
     'bitski-wp-plugin-boilerplate/option/rest/api/load'  => \BitskiWPPluginBoilerplate\rest\Api::class,
 ];
