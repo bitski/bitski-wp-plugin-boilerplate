@@ -1,6 +1,6 @@
 # bitski-wp-plugin-boilerplate
 
-[![Version](https://img.shields.io/github/v/release/bitski/bitski-wp-plugin-boilerplate?sort=semver)](https://github.com/bitski/bitski-wp-theme/releases)
+[![Version](https://img.shields.io/github/v/release/bitski/bitski-wp-plugin-boilerplate?sort=semver)](https://github.com/bitski/bitski-wp-plugin-boilerplate/releases)
 [![License](https://img.shields.io/github/license/bitski/bitski-wp-plugin-boilerplate)](LICENSE)
 [![WordPress](https://img.shields.io/badge/WordPress-6.5%2B-blue)](https://wordpress.org)
 [![PHP](https://img.shields.io/badge/PHP-8.1%2B-red)](https://www.php.net)
@@ -13,8 +13,7 @@ v1.0.0 | GPL v3+
 ## Disclaimer
 
 This boilerplate is provided "as is", without warranty of any kind, either expressed or implied. The author is not
-liable for
-any damages arising from its use. Use at your own risk.
+liable for any damages arising from its use. Use at your own risk.
 
 ## ✨ Features
 
@@ -49,22 +48,19 @@ vendor/bin/phpcs
 ### Server
 
 - PHP 8.1+ (tested up to PHP 8.4)
-- WordPress 6.5+ (Full Site Editing ready)
+- WordPress 6.5+
 - MySQL 5.7+ / MariaDB 10.4+
 
 ### Development
 
 - Composer 2.7+
-- Node.js 18+ / 20 LTS
-- npm 9+ / yarn 1.22+
-- sass, esbuild
 - PHPCS 3.8+ (phpcs.xml inklusive, PSR-12)
 
 ## 📁 Structure
 
 ### Entry points
 
-PHP: `src/` (PSR-4 namespace: BitskiWPTheme\*) → `src/theme/` (Initialization order: Config → Options → Setup → Lifecycle → Hooks → PWA → Schema)
+PHP: `src/` (PSR-4 namespace: BitskiWPPluginBoilerplate\*) → `src/core/` (Initialization order: Config → Options → Setup → Lifecycle → Hooks)
 
 Bootstrap: bitski-wp-plugin-boilerplate.php → bootstrap.php
 
