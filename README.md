@@ -5,8 +5,7 @@
 [![WordPress](https://img.shields.io/badge/WordPress-6.5%2B-blue)](https://wordpress.org)
 [![PHP](https://img.shields.io/badge/PHP-8.1%2B-red)](https://www.php.net)
 
-Slim WordPress plugin boilerplate integrating PHP OOP principles and modular architecture for high-performance
-development.
+OOP-driven, modular WordPress plugin boilerplate with PSR-4 autoloading and REST integration layer.
 
 v1.0.0 | GPL v3+
 
