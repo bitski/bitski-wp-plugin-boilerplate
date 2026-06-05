@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Ongoing maintenance and internal improvements
 
+## [1.0.1] - 2026-06-05
+
+### Changed
+
+- Integration adapter initialization now exits early when the configured dependency is unavailable
+- Adapter availability checks were clarified around the configured dependency class
+- Debug logging for unavailable integration dependencies was improved
+
+### Fixed
+
+- Prevented integration hooks from being registered when the required external plugin or module is missing
+
 ## [1.0.0] - 2026-05-29
 
 ### Added
