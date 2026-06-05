@@ -59,6 +59,18 @@ $conditional_class_map = [
 ];
 
 /**
+ * Array of conditional integration classes that are only initialized if the corresponding plugin option is enabled.
+ *
+ * Each entry maps a filter name to the class that should be instantiated.
+ * Filter keys enable/disable optional plugin features via plugin options.
+ *
+ * @var array $integration_class_map
+ */
+$integration_class_map = [
+    //'bitski-wp-plugin-boilerplate/option/integration/example-adapter/load' => \BitskiWPPluginBoilerplate\integration\ExampleAdapter::class, // Replace with existing vendor adapter class option and name if needed.
+];
+
+/**
  * Array of admin-specific classes that are only initialized if the corresponding plugin option is enabled
  * and the request is in the admin area.
  *
@@ -100,6 +112,24 @@ foreach ($conditional_class_map as $option_key => $class) {
         }
     }
 }
+
+/**
+ * Instantiates and initializes conditional integration classes based on plugin option filters.
+ */
+add_action('plugins_loaded', static function () use ($integration_class_map) {
+    foreach ($integration_class_map as $option_key => $class) {
+        if (\BitskiWPPluginBoilerplate\core\Options::get($option_key)) {
+            try {
+                $instance = new $class();
+                if (method_exists($instance, 'init')) {
+                    $instance->init();
+                }
+            } catch (\Throwable $error) {
+                error_log($class . ' Error: ' . $error->getMessage());
+            }
+        }
+    }
+});
 
 /**
  * Instantiates and initializes conditional admin-specific classes based on plugin option filters.
