@@ -4,7 +4,13 @@
       "BitskiWPPluginBoilerplate\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "BitskiWPPluginBoilerplate\\Tests\\": "tests/"
+    }
+  },
   "require-dev": {
+    "phpunit/phpunit": "^12.5",
     "squizlabs/php_codesniffer": "^4.0"
   },
   "scripts": {
